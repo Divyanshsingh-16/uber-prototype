@@ -17,6 +17,13 @@ const blacklistTokenModel  = require('../models/blacklistToken.model');
         }
       
         const {fullname,email,password}= req.body;
+
+
+        const isUserAlreadyExist = await userModel.findOne({email});
+
+        if(isUserAlreadyExist){
+          res.status(400).json({message : 'user already exist'})
+        }
         const hashedpassword  = await bcrypt.hash(password,10);
         
           const user = await userService.createUser({
