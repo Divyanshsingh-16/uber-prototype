@@ -83,13 +83,15 @@ const blacklistTokenModel  = require('../models/blacklistToken.model');
 
 
     module.exports.logoutUser = async(req,res,next)=>{
-        res.clearCookie('token');
+     
         const token = req.cookies.token ||req.headers['authorization']?.split(' ')[1]; 
 
 
          await blacklistTokenModel.create({
           token
          });
+
+         res.clearCookie('token');
 res.send(200).json({
   message : 'Logged Out '
 })
